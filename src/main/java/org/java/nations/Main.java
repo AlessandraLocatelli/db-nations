@@ -1,6 +1,7 @@
 package org.java.nations;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class Main {
 
@@ -13,24 +14,33 @@ public class Main {
             "FROM countries \n" +
             "JOIN regions on regions.region_id = countries.region_id\n" +
             "JOIN continents on continents.continent_id = regions.continent_id\n" +
+            "WHERE countries.name LIKE ? "+
             "ORDER BY country; ";
 
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
+
     try(Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD))
     {
 
+        System.out.println("Insert your string to start the research ");
+        String userString = sc.nextLine();
+
+
         try(PreparedStatement ps = con.prepareStatement(SQL_QUERY))
         {
+
+            ps.setString(1,"%"+userString+"%");
 
             try(ResultSet rs = ps.executeQuery())
             {
                 while(rs.next())
                 {
-                    int id = rs.getInt(1);
-                    String country = rs.getString(2);
-                    String region = rs.getString(3);
-                    String continent = rs.getString(4);
+                    int id = rs.getInt("id");
+                    String country = rs.getString("Country");
+                    String region = rs.getString("Region");
+                    String continent = rs.getString("Continent");
                     System.out.print("id: ");
                     System.out.println(id);
                     System.out.print("country: ");
@@ -51,11 +61,6 @@ public class Main {
 
         }
 
-
-
-
-
-
     }
     catch(SQLException e)
     {
@@ -66,7 +71,7 @@ public class Main {
 
     }
 
-
+   sc.close();
 
     }
 
