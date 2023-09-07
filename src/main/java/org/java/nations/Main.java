@@ -31,10 +31,15 @@ public class Main {
                     String country = rs.getString(2);
                     String region = rs.getString(3);
                     String continent = rs.getString(4);
-                    System.out.println("id: "+id);
-                    System.out.println("country: "+country);
-                    System.out.println("region: "+region);
-                    System.out.println("continent: "+continent);
+                    System.out.print("id: ");
+                    System.out.println(id);
+                    System.out.print("country: ");
+                    System.out.println(country);
+                    System.out.print("region: ");
+                    System.out.println(region);
+                    System.out.print("continent: ");
+                    System.out.println(continent);
+                    System.out.println();
 
 
                 }
